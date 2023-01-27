@@ -6,10 +6,10 @@ type SuperButtonPropsType = {
     name: string
 }
 export const SuperButton = (props: SuperButtonPropsType) => {
-    const onClickHandler = () => {
-        props.callBack()
-    }
+    let finalStyle = props.disabled ? {opacity: 0.3} : {opacity: 1}
     return (
-        <button onClick={onClickHandler} disabled={props.disabled}>{props.name}</button>
+        <button onClick={props.callBack}
+                disabled={props.disabled}
+                style={finalStyle}>{props.name}</button>
     )
 }
