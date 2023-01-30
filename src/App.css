@@ -15,9 +15,11 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     border: 2px solid #02bdfd;
     margin: 0 auto;
     width: 310px;
+    height: 200px;
     padding: 5px;
     background-color: #333;
     border-radius: 20px;
@@ -25,12 +27,12 @@ html, body {
 
 .tablo {
     text-align: center;
+    padding: 20px 0;
     border-radius: 20px;
     border: #02bdfd 3px solid;
     background-color: #02bdfd;
     width: 300px;
-    height: 100px;
-    /*text-align: center;*/
+    height: 120px;
     font-size: 50px;
     font-weight: bold;
     color: #591098;
@@ -51,7 +53,59 @@ html, body {
     height: 40px;
     border: none;
     border-radius: 5px;
-    color: white;
+    color:  #333;
     font-size: 20px;
     font-weight: 700;
+}
+
+.button button:active {
+    background-color: #333;
+    color: #02bdfd;
+}
+.inputNumber {
+    outline: none;
+    width: 150px;
+    height: 30px;
+    border: 2px solid #02bdfd;
+    border-radius: 3px;
+    text-align: center;
+    font-weight: 600;
+    margin: 5px;
+}
+
+.settingWrapper {
+    border: 3px solid #02bdfd;
+    border-radius: 20px;
+    width: 300px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    font-size: 20px;
+    color: #02bdfd;
+    font-weight: 600;
+}
+
+.errorInput {
+    border: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.6);
+}
+
+.maxWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+}
+
+.incorrectValue {
+    font-size: 30px;
+    color: red;
+}
+
+.setValues {
+    font-size: 30px;
+    color: white;
 }
