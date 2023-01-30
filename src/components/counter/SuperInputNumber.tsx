@@ -13,7 +13,7 @@ export const SuperInputNumber: React.FC<SuperInputNumberPropsType> = (
     }
 ) => {
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        changeInputValue(+e.currentTarget.value)
+        changeInputValue(e.currentTarget.valueAsNumber)
     }
     return (
         <input onChange={onChangeHandler} type="number" value={value} className={className}/>
