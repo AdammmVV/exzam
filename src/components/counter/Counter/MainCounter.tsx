@@ -14,7 +14,6 @@ export const MainCounter:React.FC<MainCounterPropsType> = (
         maxValue,
         minValue,
         error,
-
     }
 ) => {
 
