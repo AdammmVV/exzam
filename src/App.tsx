@@ -7,6 +7,7 @@ export const App = () => {
 
     const [maxValue, setMaxValue] = useState<number>(5)
     const [minValue, setMinValue] = useState<number>(0)
+    const [error, setError] = useState<boolean | 'change'>(false)
 
     const changeMaxValue = (max:number) => {
         setMaxValue(max)
@@ -18,9 +19,11 @@ export const App = () => {
     return (
         <div className={'appWrapper'}>
             <SettingsMainCounter changeMaxValue={changeMaxValue}
-                                 changeMinValue={changeMinValue}/>
-            <MainCounter maxValue={maxValue} minValue={minValue}/>
-            {/*<Telegramm/>*/}
+                                 changeMinValue={changeMinValue}
+                                 setError={setError}/>
+            <MainCounter maxValue={maxValue}
+                         minValue={minValue}
+                         error={error}/>
         </div>
     )
 }
