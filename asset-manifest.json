@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/exzam/static/css/main.222cfa13.css",
+    "main.js": "/exzam/static/js/main.e4f68751.js",
+    "static/js/787.80c46057.chunk.js": "/exzam/static/js/787.80c46057.chunk.js",
+    "index.html": "/exzam/index.html",
+    "main.222cfa13.css.map": "/exzam/static/css/main.222cfa13.css.map",
+    "main.e4f68751.js.map": "/exzam/static/js/main.e4f68751.js.map",
+    "787.80c46057.chunk.js.map": "/exzam/static/js/787.80c46057.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.222cfa13.css",
+    "static/js/main.e4f68751.js"
+  ]
+}
