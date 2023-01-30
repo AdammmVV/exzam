@@ -6,14 +6,14 @@ import {SettingsMainCounter} from "./components/counter/SettingsMainCounter";
 export const App = () => {
 
     const [maxValue, setMaxValue] = useState<number>(5)
-    const [minValue, setMinValue] = useState<number>(0)
+    const [startValue, setStartValue] = useState<number>(0)
     const [error, setError] = useState<boolean | 'change'>(false)
 
     const changeMaxValue = (max:number) => {
         setMaxValue(max)
     }
-    const changeMinValue = (min:number) => {
-        setMinValue(min)
+    const changeMinValue = (start:number) => {
+        setStartValue(start)
     }
 
     return (
@@ -22,7 +22,7 @@ export const App = () => {
                                  changeMinValue={changeMinValue}
                                  setError={setError}/>
             <MainCounter maxValue={maxValue}
-                         minValue={minValue}
+                         minValue={startValue}
                          error={error}/>
         </div>
     )
