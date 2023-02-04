@@ -1,25 +1,26 @@
 import React, {useEffect, useState} from "react";
 import {SuperButton} from "../SuperButton/SuperButton";
 import {Counter} from "./Counter";
+import {StatusType} from "../../../App";
 
 
 type MainCounterPropsType = {
     maxValue: number
     minValue: number
-    error: boolean | 'change'
+    status: StatusType
 }
 
-export const MainCounter:React.FC<MainCounterPropsType> = (
+export const MainCounter: React.FC<MainCounterPropsType> = (
     {
         maxValue,
         minValue,
-        error,
+        status,
     }
 ) => {
 
     const [counter, setCounter] = useState<number>(0);
 
-    useEffect(()=> {
+    useEffect(() => {
         setCounter(minValue)
     }, [minValue])
 
@@ -33,13 +34,19 @@ export const MainCounter:React.FC<MainCounterPropsType> = (
         setCounter(minValue)
     }
 
-
     return (
         <div className='counter'>
-            <Counter counter={counter} red={red} error={error}/>
+            <Counter counter={counter}
+                     red={red}
+                     status={status}
+            />
             <div className='button'>
-                <SuperButton callBack={counterButtonInc} name={'inc'} disabled={counter >= maxValue}/>
-                <SuperButton callBack={counterButtonReset} name={'reset'} disabled={counter === minValue}/>
+                <SuperButton callBack={counterButtonInc}
+                             name={'inc'}
+                             disabled={counter >= maxValue}/>
+                <SuperButton callBack={counterButtonReset}
+                             name={'reset'}
+                             disabled={counter === minValue}/>
             </div>
         </div>
     );
