@@ -7,8 +7,11 @@ html, body {
 
 .appWrapper {
     min-height: 100vh;
-    display: flex;
+    display: grid;
+    gap: 40px;
+    grid-template-columns: auto auto;
     align-items: center;
+    justify-content: center;
 }
 
 .counter {
@@ -67,7 +70,7 @@ html, body {
     width: 150px;
     height: 30px;
     border: 2px solid #02bdfd;
-    border-radius: 3px;
+    border-radius: 10px;
     text-align: center;
     font-weight: 600;
     margin: 5px;
@@ -96,7 +99,8 @@ html, body {
 .maxWrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    gap: 5px;
     width: 300px;
 }
 
