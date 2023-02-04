@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {MainCounter} from "./components/counter/Counter/MainCounter";
 import {SettingsMainCounter} from "./components/counter/SettingsMainCounter";
+
+export type StatusType = 'default' | 'changed' | 'error'
 
 export const App = () => {
 
     const [maxValue, setMaxValue] = useState<number>(5)
     const [startValue, setStartValue] = useState<number>(0)
-    const [error, setError] = useState<boolean | 'change'>(false)
+    const [status, setStatus] = useState<StatusType>('default')
 
-    const changeMaxValue = (max:number) => {
+    const changeMaxValue = (max: number) => {
         setMaxValue(max)
     }
-    const changeMinValue = (start:number) => {
+    const changeMinValue = (start: number) => {
         setStartValue(start)
     }
 
@@ -20,10 +22,12 @@ export const App = () => {
         <div className={'appWrapper'}>
             <SettingsMainCounter changeMaxValue={changeMaxValue}
                                  changeMinValue={changeMinValue}
-                                 setError={setError}/>
+                                 setStatus={setStatus}
+            />
             <MainCounter maxValue={maxValue}
                          minValue={startValue}
-                         error={error}/>
+                         status={status}
+            />
         </div>
     )
 }
