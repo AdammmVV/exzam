@@ -20,28 +20,20 @@ export const SettingsMainCounter: React.FC<SettingsMainCounterPropsType> = (
     const [minInputValue, setMinInputValue] = useState<number>(0)
 
 
-    useEffect(()=> {
-        let maxValue = localStorage.getItem('maxValue')
-        let startValue = localStorage.getItem('startValue')
-        let status = localStorage.getItem('status')
+    useEffect(() => {
+        let maxValue = localStorage.getItem('maxInputValue')
+        let startValue = localStorage.getItem('minInputValue')
 
         maxValue && setMaxInputValue(JSON.parse(maxValue))
         startValue && setMinInputValue(JSON.parse(startValue))
-        status && setStatus(JSON.parse(status))
 
     }, [])
 
     useEffect(() => {
-        minInputValue >= maxInputValue || minInputValue < 0 ?
-            setStatus('error') : setStatus('changed')
-    }, [maxInputValue, minInputValue])
-
-
-
-
-    useEffect(()=> {
         localStorage.setItem("maxInputValue", JSON.stringify(maxInputValue))
         localStorage.setItem("minInputValue", JSON.stringify(minInputValue))
+        minInputValue >= maxInputValue || minInputValue < 0 ?
+            setStatus('error') : setStatus('changed')
     }, [maxInputValue, minInputValue])
 
 
@@ -62,21 +54,29 @@ export const SettingsMainCounter: React.FC<SettingsMainCounterPropsType> = (
     let finalStyle = `inputNumber${(maxInputValue <= minInputValue || minInputValue < 0) ? ' errorInput' : ''}`
 
     return (
-        <div className='counter'>
-            <form action="#">
-                <input type="number"
-                       value={maxInputValue}
-                       onChange={changeMaxInputValue}
-                       className={finalStyle}
-                />
-                <input type="number"
-                       value={minInputValue}
-                       onChange={changeMinInputValue}
-                       className={finalStyle}
-                />
+        <form className='counter'>
+            <div className={'settingWrapper'}>
+                <div className={'maxWrapper'}>
+                    <span>max value:</span>
+                    <input type="number"
+                           value={maxInputValue}
+                           onChange={changeMaxInputValue}
+                           className={finalStyle}
+                    />
+                </div>
+                <div className={'maxWrapper'}>
+                    <span>start value:</span>
+                    <input type="number"
+                           value={minInputValue}
+                           onChange={changeMinInputValue}
+                           className={finalStyle}
+                    />
+                </div>
+            </div>
+            <div className={'button'}>
                 <SuperButton callBack={changeSettingCounter} name={'set'}
                              disabled={(maxInputValue <= minInputValue || minInputValue < 0)}/>
-            </form>
-        </div>
+            </div>
+        </form>
     );
 }
