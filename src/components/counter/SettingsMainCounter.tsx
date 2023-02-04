@@ -1,41 +1,82 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {SuperButton} from "./SuperButton/SuperButton";
-import {SettingCounter} from "./SettingCounter";
+import {StatusType} from "../../App";
 
 type SettingsMainCounterPropsType = {
     changeMaxValue: (max: number) => void
     changeMinValue: (min: number) => void
-    setError: (val: boolean | 'change') => void
+    setStatus: (value: StatusType) => void
+
 }
 
 export const SettingsMainCounter: React.FC<SettingsMainCounterPropsType> = (
     {
         changeMaxValue,
         changeMinValue,
-        setError,
+        setStatus,
     }
 ) => {
     const [maxInputValue, setMaxInputValue] = useState<number>(5)
     const [minInputValue, setMinInputValue] = useState<number>(0)
 
 
+    useEffect(()=> {
+        let maxValue = localStorage.getItem('maxValue')
+        let startValue = localStorage.getItem('startValue')
+        let status = localStorage.getItem('status')
+
+        maxValue && setMaxInputValue(JSON.parse(maxValue))
+        startValue && setMinInputValue(JSON.parse(startValue))
+        status && setStatus(JSON.parse(status))
+
+    }, [])
+
+    useEffect(() => {
+        minInputValue >= maxInputValue || minInputValue < 0 ?
+            setStatus('error') : setStatus('changed')
+    }, [maxInputValue, minInputValue])
+
+
+
+
+    useEffect(()=> {
+        localStorage.setItem("maxInputValue", JSON.stringify(maxInputValue))
+        localStorage.setItem("minInputValue", JSON.stringify(minInputValue))
+    }, [maxInputValue, minInputValue])
+
+
     const changeSettingCounter = () => {
         changeMaxValue(maxInputValue)
         changeMinValue(minInputValue)
-        setError(false)
+        setStatus('default')
     }
+
+    const changeMaxInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setMaxInputValue(e.currentTarget.valueAsNumber)
+    }
+
+    const changeMinInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setMinInputValue(e.currentTarget.valueAsNumber)
+    }
+
+    let finalStyle = `inputNumber${(maxInputValue <= minInputValue || minInputValue < 0) ? ' errorInput' : ''}`
 
     return (
         <div className='counter'>
-            <SettingCounter maxInputValue={maxInputValue}
-                            minInputValue={minInputValue}
-                            setMaxInputValue={setMaxInputValue}
-                            setMinInputValue={setMinInputValue}
-                            setError={setError}/>
-            <div className='button'>
+            <form action="#">
+                <input type="number"
+                       value={maxInputValue}
+                       onChange={changeMaxInputValue}
+                       className={finalStyle}
+                />
+                <input type="number"
+                       value={minInputValue}
+                       onChange={changeMinInputValue}
+                       className={finalStyle}
+                />
                 <SuperButton callBack={changeSettingCounter} name={'set'}
                              disabled={(maxInputValue <= minInputValue || minInputValue < 0)}/>
-            </div>
+            </form>
         </div>
     );
 }
