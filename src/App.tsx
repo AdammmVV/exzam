@@ -11,6 +11,23 @@ export const App = () => {
     const [startValue, setStartValue] = useState<number>(0)
     const [status, setStatus] = useState<StatusType>('default')
 
+    useEffect(()=> {
+        let maxValue = localStorage.getItem('maxValue')
+        let startValue = localStorage.getItem('startValue')
+        let status = localStorage.getItem('status')
+
+        maxValue && setMaxValue(JSON.parse(maxValue))
+        startValue && setStartValue(JSON.parse(startValue))
+        status && setStatus(JSON.parse(status))
+
+    }, [])
+
+    useEffect(()=> {
+        localStorage.setItem("maxValue", JSON.stringify(maxValue))
+        localStorage.setItem("startValue", JSON.stringify(startValue))
+        localStorage.setItem("status", JSON.stringify(status))
+    }, [maxValue, startValue, status])
+
     const changeMaxValue = (max: number) => {
         setMaxValue(max)
     }
