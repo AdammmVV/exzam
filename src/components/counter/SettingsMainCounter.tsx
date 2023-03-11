@@ -1,57 +1,32 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, MouseEvent} from "react";
 import {SuperButton} from "./SuperButton/SuperButton";
-import {StatusType} from "../../App";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootType} from "../../redux/store";
+import {
+    changeMaxInputValueAC,
+    changeMinInputValueAC,
+    changeStatusCounterAC,
+    CounterStateType
+} from "../../redux/counterReducer";
 
-type SettingsMainCounterPropsType = {
-    changeMaxValue: (max: number) => void
-    changeMinValue: (min: number) => void
-    setStatus: (value: StatusType) => void
+export const SettingsMainCounter: React.FC = () => {
+    const counterState = useSelector<AppRootType, CounterStateType>(state => state.counterState)
+    const dispatch = useDispatch()
 
-}
-
-export const SettingsMainCounter: React.FC<SettingsMainCounterPropsType> = (
-    {
-        changeMaxValue,
-        changeMinValue,
-        setStatus,
-    }
-) => {
-    const [maxInputValue, setMaxInputValue] = useState<number>(5)
-    const [minInputValue, setMinInputValue] = useState<number>(0)
-
-
-    useEffect(() => {
-        let maxValue = localStorage.getItem('maxInputValue')
-        let startValue = localStorage.getItem('minInputValue')
-
-        maxValue && setMaxInputValue(JSON.parse(maxValue))
-        startValue && setMinInputValue(JSON.parse(startValue))
-
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem("maxInputValue", JSON.stringify(maxInputValue))
-        localStorage.setItem("minInputValue", JSON.stringify(minInputValue))
-        minInputValue >= maxInputValue || minInputValue < 0 ?
-            setStatus('error') : setStatus('changed')
-    }, [maxInputValue, minInputValue])
-
-
-    const changeSettingCounter = () => {
-        changeMaxValue(maxInputValue)
-        changeMinValue(minInputValue)
-        setStatus('default')
+    const changeSettingCounter = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        dispatch(changeStatusCounterAC('default'))
     }
 
     const changeMaxInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setMaxInputValue(e.currentTarget.valueAsNumber)
+        dispatch(changeMaxInputValueAC(e.currentTarget.valueAsNumber))
     }
 
     const changeMinInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setMinInputValue(e.currentTarget.valueAsNumber)
+        dispatch(changeMinInputValueAC(e.currentTarget.valueAsNumber))
     }
 
-    let finalStyle = `inputNumber${(maxInputValue <= minInputValue || minInputValue < 0) ? ' errorInput' : ''}`
+    let finalStyle = `inputNumber${(counterState.maxValue <= counterState.startValue || counterState.startValue < 0) ? ' errorInput' : ''}`
 
     return (
         <form className='counter'>
@@ -59,7 +34,7 @@ export const SettingsMainCounter: React.FC<SettingsMainCounterPropsType> = (
                 <div className={'maxWrapper'}>
                     <span>max value:</span>
                     <input type="number"
-                           value={maxInputValue}
+                           value={counterState.maxValue}
                            onChange={changeMaxInputValue}
                            className={finalStyle}
                     />
@@ -67,15 +42,16 @@ export const SettingsMainCounter: React.FC<SettingsMainCounterPropsType> = (
                 <div className={'maxWrapper'}>
                     <span>start value:</span>
                     <input type="number"
-                           value={minInputValue}
+                           value={counterState.startValue}
                            onChange={changeMinInputValue}
                            className={finalStyle}
                     />
                 </div>
             </div>
             <div className={'button'}>
-                <SuperButton callBack={changeSettingCounter} name={'set'}
-                             disabled={(maxInputValue <= minInputValue || minInputValue < 0)}/>
+                <SuperButton callBack={changeSettingCounter}
+                             name={'set'}
+                             disabled={(counterState.maxValue <= counterState.startValue || counterState.startValue < 0)}/>
             </div>
         </form>
     );
