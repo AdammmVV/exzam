@@ -1,14 +1,14 @@
-import React from "react";
+import React, {MouseEvent} from "react";
 
 type SuperButtonPropsType = {
     disabled: boolean
-    callBack: () => void
+    callBack: (e:MouseEvent<HTMLButtonElement>) => void
     name: string
 }
 export const SuperButton = (props: SuperButtonPropsType) => {
     let finalStyle = props.disabled ? {opacity: 0.3} : {opacity: 1}
     return (
-        <button onClick={props.callBack}
+        <button onClick={(e)=>props.callBack(e)}
                 disabled={props.disabled}
                 style={finalStyle}>{props.name}</button>
     )
