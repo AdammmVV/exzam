@@ -1,17 +1,19 @@
 import React from "react";
-import {StatusType} from "../../../App";
+import {useSelector} from "react-redux";
+import { AppRootType } from "../../../redux/store";
+import {StatusType} from "../../../redux/counterReducer";
 
 type CounterPropsType = {
     counter: number
-    status: StatusType
     red: { color: string }
 }
 export const Counter: React.FC<CounterPropsType> = (
     {
         counter,
-        status,
         red,
     }) => {
+
+    const status = useSelector<AppRootType, StatusType>(state => state.counterState.status)
 
     const finalValue = status === 'error'
         ? <div className={'incorrectValue'}>Incorrect value!</div>
